@@ -9,25 +9,14 @@ getCurrentTime();
 
 player.on('timeupdate', throttle(onPlay, 1000));
 
-function onPlay(data) {
-  localStorage.setItem(TIME_UPDATE, JSON.stringify(data));
+function onPlay({ seconds }) {
+  localStorage.setItem(TIME_UPDATE, seconds);
 }
 
 function getCurrentTime() {
   try {
-    const data = JSON.parse(localStorage.getItem(TIME_UPDATE)) || {};
-
-    player
-      .setCurrentTime(data.seconds)
-      .then(function () {})
-      .catch(function (error) {
-        switch (error.name) {
-          case 'RangeError':
-            break;
-          default:
-            break;
-        }
-      });
+    const data = localStorage.getItem(TIME_UPDATE) || 0;
+    player.setCurrentTime(data);
   } catch (err) {
     console.log(err);
   }

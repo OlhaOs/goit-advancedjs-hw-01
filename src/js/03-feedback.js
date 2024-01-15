@@ -11,7 +11,7 @@ refs.formEl.addEventListener('submit', handleFormSubmit);
 refs.emailEl.addEventListener('input', throttle(handleFormInput, 500));
 refs.messageEl.addEventListener('input', throttle(handleFormInput, 500));
 
-const data = JSON.parse(localStorage.getItem(FORM_DATA_KEY)) || {};
+let data = JSON.parse(localStorage.getItem(FORM_DATA_KEY)) || {};
 
 refs.emailEl.value = data.email || '';
 refs.messageEl.value = data.message || '';
@@ -23,11 +23,16 @@ function handleFormInput(e) {
 
 function handleFormSubmit(e) {
   e.preventDefault();
+  if (!(refs.emailEl.value && refs.messageEl.value)) {
+    alert('Please, fill all fields');
+    return;
+  }
   console.log(data);
   clearForm();
 }
 function clearForm() {
   localStorage.removeItem(FORM_DATA_KEY);
+  data = {};
   refs.emailEl.value = '';
   refs.messageEl.value = '';
 }

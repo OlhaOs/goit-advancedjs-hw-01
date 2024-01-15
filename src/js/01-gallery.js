@@ -5,9 +5,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 const gallery = document.querySelector('.gallery');
 renderMarkup();
 
-gallery.addEventListener('click', handleClick);
-
-const lightbox = new SimpleLightbox('.gallery a', {
+new SimpleLightbox('.gallery a', {
   captionDelay: 250,
   captionsData: 'alt',
   captionPosition: 'bottom',
@@ -15,19 +13,6 @@ const lightbox = new SimpleLightbox('.gallery a', {
   animationSlide: true,
   widthRatio: 1,
 });
-
-function handleClick(e) {
-  e.preventDefault();
-  const clickedImg = e.target.closest('.gallery__item');
-
-  if (!clickedImg) {
-    return;
-  }
-  const index = galleryItems.findIndex(
-    item => item.preview === clickedImg.querySelector('img').src
-  );
-  lightbox.open(index);
-}
 
 function createMarkup(items) {
   return items
